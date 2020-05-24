@@ -1,0 +1,28 @@
+<nav class="navbar bg-dark">
+    <h2>Online Shop</h2>
+
+    <ul>
+        <li routerLinkActive="active">
+            <a [routerLink]="['/product']">Product</a>
+        </li>
+        <li routerLinkActive="active">
+            <a [routerLink]="['/cart']">Cart</a>
+        </li>
+        <li  *ngIf="!authService.isUserLoggedIn()" routerLinkActive="active">
+            <a [routerLink]="['/sign-in']">Sign-in</a>
+        </li>
+        <li *ngIf="!authService.isUserLoggedIn()" routerLinkActive="active">
+            <a [routerLink]="['/sign-up']">Sign-up</a>
+        </li>
+        <li *ngIf="authService.isCurUserAdmin">
+            <a [routerLink]="['/admin']">Admin</a>
+        </li>
+        <li *ngIf="authService.isUserLoggedIn()">
+            <a (click)="Logout()" [routerLink]="['/']">Logout</a>
+        </li>
+    </ul>
+</nav>
+
+<div class="container">
+    <router-outlet></router-outlet>
+</div>
