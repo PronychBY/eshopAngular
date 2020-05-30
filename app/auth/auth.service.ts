@@ -39,7 +39,9 @@ export class AuthService {
         console.log('currentUser');
         console.log(localStorage.getItem('currentUser'));
         this.isAdmin(JSON.parse(localStorage.getItem('currentUser'))).subscribe(
-          result => this.isCurUserAdmin = result,
+          result => {
+            localStorage.setItem('isCurentUserAdmin', JSON.stringify(result));
+          },
           (error) => console.log(error)
         );
         localStorage.setItem('token', user.accessToken);
@@ -56,9 +58,9 @@ export class AuthService {
   }
 
   getToken() {
-
     return "Bearer " + localStorage.getItem('token');
   }
+
 
   registerSuccessfulLogin(username) {
     sessionStorage.setItem(this.USER_NAME_SESSION_ATTRIBUTE_NAME, username)
@@ -69,7 +71,7 @@ export class AuthService {
     this.username = null;
     this.password = null;
     localStorage.removeItem('token');
-
+    localStorage.removeItem('isCurentUserAdmin');
     this.router.navigate(['/sign-in']);
 
   }
@@ -86,6 +88,12 @@ export class AuthService {
     return this.http.post<any>(this.ISADMIN_PATH, user);
   }
 
+  isCurentUserAdmin() {
+    let isAdmin = localStorage.getItem('isCurentUserAdmin');
+    if (isAdmin === null) return false
+    return isAdmin
+
+  }
   getLoggedInUserName() {
     let user = sessionStorage.getItem(this.USER_NAME_SESSION_ATTRIBUTE_NAME)
     if (user === null) return ''
@@ -129,9 +137,4 @@ export class AuthService {
 
 
   }
-
-
-
-
-
 }

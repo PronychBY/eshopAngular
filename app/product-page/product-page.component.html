@@ -1,28 +1,30 @@
 <div class="container col-lg-6">
     <h1 class="text-center">Product page</h1>
-    <div class="card">
-        <div class="card-body">
-            <tr *ngFor = "let product of products">
+
+    <table>
+        <tbody>
+
+            <tr *ngFor="let product of products">
                 <td>{{product.id}}</td>
                 <td>{{product.name}}</td>
-                
-                <button (click)=addToChart(product.id) class="btn btn-success">Add to chart</button>
-                &nbsp;|&nbsp;
+                <td>{{product.price}}</td>
+
+                <button (click)=addToChart(product) class="btn btn-success">Add to chart</button>
+                <!--&nbsp;|&nbsp;
                 <button (click) = "addToChart(product.id)" class="btn btn-primary a-btn-slide-text"><span class="glyphicon glyphicon-remove"></span><span><strong>Delete</strong></span></button>
-                     
+                -->
             </tr>
-                
-            <tr *ngIf = "!products">
-                <td colspan = "3">Loading... Please wait....</td>
+
+            <tr *ngIf="!products">
+                <td colspan="3">Loading... Please wait....</td>
             </tr>
-            <tr *ngIf = "products && products.length == 0">
-                <td colspan = "4">No records found!</td>
+            <tr *ngIf="products && products.length == 0">
+                <td colspan="4">No records found!</td>
             </tr>
-                        
 
 
-        </div>
-    </div>
+
+        </tbody>
+    </table>
 
 </div>
-

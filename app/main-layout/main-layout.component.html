@@ -14,7 +14,7 @@
         <li *ngIf="!authService.isUserLoggedIn()" routerLinkActive="active">
             <a [routerLink]="['/sign-up']">Sign-up</a>
         </li>
-        <li *ngIf="authService.isCurUserAdmin">
+        <li *ngIf="authService.isCurentUserAdmin()">
             <a [routerLink]="['/admin']">Admin</a>
         </li>
         <li *ngIf="authService.isUserLoggedIn()">

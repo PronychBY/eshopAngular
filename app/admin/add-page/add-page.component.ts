@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../product-page/product.service';
 import { Product } from '../../entity/product';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-page',
@@ -9,7 +10,10 @@ import { Product } from '../../entity/product';
 })
 export class AddPageComponent implements OnInit {
   product: Product = new Product;
-  constructor(private productService: ProductService) { }
+  constructor(
+    private productService: ProductService,
+    private router: Router
+    ) { }
 
   ngOnInit(): void {
   }
@@ -20,6 +24,8 @@ export class AddPageComponent implements OnInit {
     }, () => {
       console.log("bad res add prod----");
     });
+    this.router.navigate(['/admin','dashboard']);
+
   }
 
 

@@ -1,13 +1,14 @@
-<div class="container" *ngIf="cartProducts.length > 0; else empty">
+<div class="container" *ngIf="order.products.length > 0; else empty">
     <h2 class="text-center">Your order:</h2>
 
     <table>
         <tbody>
-            <tr *ngFor="let cartProduct of cartProducts; let i = index">
-                <td>{{ cartProduct.type }}</td>
-                <td>{{ cartProduct.title }}</td>
+            <tr *ngFor="let cartProduct of order.products; let i = index">
+                <td>{{ i+1 }}</td>
+                <td>{{ cartProduct.id }}</td>
+                <td>{{ cartProduct.name }}</td>
                 <td>
-                    <button class="btn btn-danger">Delete</button>
+                    <button class="btn btn-danger" (click)="deleteFromChart(i)">Delete</button>
                 </td>
                 <td>{{ cartProduct.price }} $</td>
             </tr>
@@ -15,9 +16,44 @@
     </table>
     <hr>
     <b class="right">Total: {{totalPrice}} $</b>
+
+    
+    <h2 class="text-center">Delivery:</h2>
+
+    <div>
+        <div>
+            <label for="name">Name</label>
+            <input [(ngModel)]="order.name" id="name" type="name">
+        </div>
+
+        
+        <div>
+            <label for="phone">Phone number</label>
+            <input [(ngModel)]="order.phone" id="phone" type="phone">
+        </div>
+
+        <div>
+            <label for="address">Address</label>
+            <input [(ngModel)]="order.address" id="address" type="address">
+        </div>
+        
+        <!--
+        <div>
+            <label for="payment">Payment method:</label>
+            <select formControlName="payment">
+                <option value="Cash">Cash</option>
+                <option value="Card">Card</option>
+            </select>
+        </div>
+        -->
+        <button (click)="sendOrderToServer()" class="btn btn-primary btn-block">Confirm</button>
+        
+    
+    </div> 
+    
+
 </div>
 
 <ng-template #empty>
     <h2 class="text-center">Cart is empty, select product</h2>
 </ng-template>
- 
