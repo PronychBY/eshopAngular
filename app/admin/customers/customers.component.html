@@ -1,0 +1,32 @@
+<div *ngIf="users.length; else loading">
+    <h2 class="text-center">Customers</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Sum Of Orders</th>
+                <th>Payments</th>
+                <th>Blocked</th>
+                <th>BlockUser</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let user of users; let idx = index">
+                <td>{{ idx + 1 }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.sumOfOrders }}</td>
+                <td>{{ user.payment }}</td>
+                <td>{{ user.blocked }}</td>
+                <td><button class="btn btn-success">Block user</button></td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<ng-template #loading>
+    <p class="text-center">Loading...</p>
+</ng-template>

@@ -9,7 +9,6 @@ import { Product } from '../entity/product';
   providedIn: 'root'
 })
 export class ProductService {
-
   cartProducts = []
   constructor(
     private http: HttpClient,
@@ -24,6 +23,17 @@ export class ProductService {
         { headers: { authorization: this.authenticationService.getToken() } });
     console.log("end of getProducts():::::");
   }
+
+  getOrders() {
+    console.log("Inside getOrders():::::")
+    if (this.authenticationService.isUserLoggedIn())
+      return this.http.get<any>("http://localhost:8080/eshop/order/list",
+       { headers: { authorization: this.authenticationService.getToken() } });
+    
+    console.log("end of getOrders():::::");
+
+  }
+
 
   addProduct(product: Product) {
     console.log('add product' + product);
@@ -43,7 +53,7 @@ export class ProductService {
         return prod;
       }));
   }
-  
+
   sendOrder(order: import("../entity/order").Order) {
     console.log('serv send order' + JSON.stringify(order));
     let body = JSON.parse(JSON.stringify(order));
@@ -65,7 +75,7 @@ export class ProductService {
   deleteProduct(id) {
     console.log('delete product id:' + id);
 
-    return this.http.delete("http://localhost:8080/eshop/product/delete/"+id,
+    return this.http.delete("http://localhost:8080/eshop/product/delete/" + id,
       { headers: { authorization: this.authenticationService.getToken() } });
   }
 

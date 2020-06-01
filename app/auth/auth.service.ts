@@ -16,6 +16,7 @@ export class AuthService {
   SIGN_IN_PATH = this.BASE_PATH + '/eshop/api/auth/signin'
   SIGN_UP_PATH = this.BASE_PATH + '/eshop/api/auth/signup'
   USERLIST_PATH = this.BASE_PATH + '/eshop/user/list'
+  DEPTS_PATH = this.BASE_PATH + '/eshop/user/depts'
   USERGETBYNAME_PATH = this.BASE_PATH + '/eshop/user/getbyname'
   ISADMIN_PATH = this.BASE_PATH + '/eshop/user/isadmin'
   USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
@@ -123,6 +124,11 @@ export class AuthService {
     //console.log("end of getUsers():::::");
 
 
+  }
+
+  getDepts() {
+    console.log("Inside getDepts():::::")
+    return this.http.get<any>(this.DEPTS_PATH);
   }
 
   getUserByName(name: String) {

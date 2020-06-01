@@ -12,8 +12,8 @@ import { Observable } from 'rxjs';
 })
 export class SignInComponent implements OnInit {
   users: User[];
-  login: string = 'test7';
-  password: string = 'test7';
+  login: string = 'test1';
+  password: string = 'test1';
   errorMessage = 'Invalid Credentials';
   successMessage: string;
   invalidLogin = false;

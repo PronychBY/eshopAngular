@@ -8,6 +8,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditPageComponent } from './edit-page/edit-page.component';
 import { OrdersPageComponent } from './orders-page/orders-page.component'
 import { FormsModule } from "@angular/forms";
+import { CustomersComponent } from './customers/customers.component';
 
 
 
@@ -16,10 +17,11 @@ import { FormsModule } from "@angular/forms";
         CommonModule,
         RouterModule.forChild([{
             path:'', component: AdminLayoutComponent, children:[
-                {path:'', redirectTo:'/admin/login',pathMatch:'full'},
+                {path:'', redirectTo:'/admin/dashboard',pathMatch:'full'},
                 {path:'login', component: LoginPageComponent},
                 {path:'add', component: AddPageComponent},
                 {path:'dashboard', component: DashboardComponent},
+                {path:'customers', component: CustomersComponent},
                 {path:'product/:id/edit', component: EditPageComponent},
                 {path:'orders', component: OrdersPageComponent}
             ]
@@ -35,7 +37,7 @@ import { FormsModule } from "@angular/forms";
         AddPageComponent, 
         DashboardComponent, 
         EditPageComponent, 
-        OrdersPageComponent
+        OrdersPageComponent, CustomersComponent
     ]
 })
 

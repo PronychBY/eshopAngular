@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ProductService } from '../../product-page/product.service';
 
 @Component({
   selector: 'app-orders-page',
@@ -6,10 +7,30 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./orders-page.component.scss']
 })
 export class OrdersPageComponent implements OnInit {
+  orders = []
+  constructor(
+    private productService: ProductService
+  
+  ) { }
 
-  constructor() { }
+  ngOnInit() {
+    this.getAllOrders();
 
-  ngOnInit(): void {
+  }
+  
+  getAllOrders() {
+    console.log("inside the getAllOrders():::::::");
+    
+    this.productService.getOrders()
+      .subscribe((data) => {
+        this.orders = data;
+        //console.log(data)
+      },
+        (error) => {
+          console.log(error);
+        }
+      );
+      
   }
 
 }
