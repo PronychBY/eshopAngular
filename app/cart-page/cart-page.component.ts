@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../product-page/product.service' 
 import { Order } from '../entity/order';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-cart-page',
@@ -11,9 +12,10 @@ export class CartPageComponent implements OnInit {
 
   totalPrice = 0
   order: Order = new Order();
-  
+  isUserBlocked = false;
   constructor(
-    private productServ : ProductService
+    private productServ : ProductService,
+    private authService : AuthService
   ) { }
 
   ngOnInit() {
@@ -22,7 +24,7 @@ export class CartPageComponent implements OnInit {
     for (let i = 0; i < this.order.products.length; i++) {
       this.totalPrice += +this.order.products[i].price
     }
-
+    this.isUserBlocked = this.authService.isUserBlocked(this.order.user);
   }
 
   deleteFromChart(index){

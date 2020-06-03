@@ -28,4 +28,14 @@ export class CustomersComponent implements OnInit {
       );
   }
 
+  blockUser(user){
+    console.log("inside blockUser():::::::");
+    this.authenticationService.blockUser(user);
+  }
+
+  unblockUser(user){
+    console.log("inside unblockUser():::::::");
+    this.authenticationService.unblockUser(user);
+  }
+
 }

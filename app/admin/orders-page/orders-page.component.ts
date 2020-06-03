@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../product-page/product.service';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-orders-page',
@@ -9,7 +10,8 @@ import { ProductService } from '../../product-page/product.service';
 export class OrdersPageComponent implements OnInit {
   orders = []
   constructor(
-    private productService: ProductService
+    private productService: ProductService,
+    private authService: AuthService
   
   ) { }
 
@@ -20,6 +22,7 @@ export class OrdersPageComponent implements OnInit {
   
   getAllOrders() {
     console.log("inside the getAllOrders():::::::");
+    if (!this.authService.isUserLoggedIn()) return;
     
     this.productService.getOrders()
       .subscribe((data) => {

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from './product.service';
 import { Product } from '../entity/product';
 import { Observable } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
 
 
 @Component({
@@ -16,7 +17,9 @@ export class ProductPageComponent implements OnInit {
   quantity:number;
   constructor(private route: ActivatedRoute,
     private router: Router,
-    private productService: ProductService
+    private productService: ProductService,
+    private authService: AuthService
+    
   ) { }
 
   ngOnInit(): void {
@@ -26,6 +29,9 @@ export class ProductPageComponent implements OnInit {
   }
 
   getAllProducts(): void {
+    if (!this.authService.isUserLoggedIn()) {
+      this.router.navigate(['/sign-in']);;
+    }
     console.log("inside the service getAllProducts():::::::");
     this.productService.getProducts()
       .subscribe((data) => {this.products = data;console.log('Data get---');},

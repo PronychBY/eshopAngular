@@ -19,6 +19,9 @@ export class AuthService {
   DEPTS_PATH = this.BASE_PATH + '/eshop/user/depts'
   USERGETBYNAME_PATH = this.BASE_PATH + '/eshop/user/getbyname'
   ISADMIN_PATH = this.BASE_PATH + '/eshop/user/isadmin'
+  IS_USER_BLOCKED_PATH = this.BASE_PATH + '/eshop/user/isuserblocked'
+  BLOCK_USER_PATH = this.BASE_PATH + '/eshop/user/setToBlackList'
+  UNBLOCK_USER_PATH = this.BASE_PATH + '/eshop/user/removeFromBlackList'
   USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
 
   public username: String;
@@ -122,14 +125,44 @@ export class AuthService {
     console.log("Inside getUsers():::::")
     return this.http.get<any>(this.USERLIST_PATH);
     //console.log("end of getUsers():::::");
-
-
   }
 
   getDepts() {
     console.log("Inside getDepts():::::")
     return this.http.get<any>(this.DEPTS_PATH);
   }
+
+  isUserBlocked(user): boolean {
+    console.log("Inside isUserBlocked():::::")
+    
+    let body = JSON.parse(JSON.stringify(user));
+    this.http.post<any>(this.IS_USER_BLOCKED_PATH,body
+      ,{ headers: { authorization: this.getToken() } })
+    .subscribe((result)=>{return result},
+    (error)=>{console.log(error);return true;});
+    return true;
+  }
+
+  blockUser(user){
+    console.log("Inside BlockUser():::::")
+    
+    let body = JSON.parse(JSON.stringify(user));
+    this.http.post<any>(this.BLOCK_USER_PATH,body
+      ,{ headers: { authorization: this.getToken() } })
+    .subscribe((result)=>{return result},
+    (error)=>{console.log(error);return true;});
+    
+  }  
+
+  unblockUser(user){
+    console.log("Inside UnblockUser():::::")
+    
+    let body = JSON.parse(JSON.stringify(user));
+    this.http.post<any>(this.UNBLOCK_USER_PATH,body
+      ,{ headers: { authorization: this.getToken() } })
+    .subscribe((result)=>{return result},
+    (error)=>{console.log(error);return true;});
+  }  
 
   getUserByName(name: String) {
     console.log("Inside getUserByName():::::")

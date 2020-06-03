@@ -1,6 +1,5 @@
 <div class="container" *ngIf="order.products.length > 0; else empty">
     <h2 class="text-center">Your order:</h2>
-
     <table>
         <tbody>
             <tr *ngFor="let cartProduct of order.products; let i = index">
@@ -46,7 +45,8 @@
             </select>
         </div>
         -->
-        <button (click)="sendOrderToServer()" class="btn btn-primary btn-block">Confirm</button>
+        <div *ngIf="isUserBlocked"><h2 class="text-center">User is Blocked</h2></div>
+        <button (click)="sendOrderToServer()" [disabled]="isUserBlocked" class="btn btn-primary btn-block">Confirm</button>
         
     
     </div> 

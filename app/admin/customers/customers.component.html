@@ -10,6 +10,7 @@
                 <th>Payments</th>
                 <th>Blocked</th>
                 <th>BlockUser</th>
+                <th>UnblockUser</th>
             </tr>
         </thead>
 
@@ -19,8 +20,9 @@
                 <td>{{ user.name }}</td>
                 <td>{{ user.sumOfOrders }}</td>
                 <td>{{ user.payment }}</td>
-                <td>{{ user.blocked }}</td>
-                <td><button class="btn btn-success">Block user</button></td>
+                <td>{{ user.inBlackList }}</td>
+                <td><button (click)="blockUser(user)" class="btn btn-success">Block user</button></td>
+                <td><button (click)="unblockUser(user)" class="btn btn-success">Unblock user</button></td>
 
             </tr>
         </tbody>
