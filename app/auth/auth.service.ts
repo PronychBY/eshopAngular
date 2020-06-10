@@ -19,7 +19,7 @@ export class AuthService {
   DEPTS_PATH = this.BASE_PATH + '/eshop/user/depts'
   USERGETBYNAME_PATH = this.BASE_PATH + '/eshop/user/getbyname'
   ISADMIN_PATH = this.BASE_PATH + '/eshop/user/isadmin'
-  IS_USER_BLOCKED_PATH = this.BASE_PATH + '/eshop/user/isuserblocked'
+  IS_USER_BLOCKED_PATH = this.BASE_PATH + '/eshop/user/isUserBlocked'
   BLOCK_USER_PATH = this.BASE_PATH + '/eshop/user/setToBlackList'
   UNBLOCK_USER_PATH = this.BASE_PATH + '/eshop/user/removeFromBlackList'
   USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
@@ -30,6 +30,7 @@ export class AuthService {
   public email: String;
   public role: String;
   public ff;
+  isBlocked:boolean=true;
   isCurUserAdmin: boolean = false;
 
   constructor(private http: HttpClient, private router: Router) { }
@@ -40,14 +41,9 @@ export class AuthService {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         //localStorage.setItem('currentUser', JSON.stringify(user));
         this.getUserByName(username);
-        console.log('currentUser');
-        console.log(localStorage.getItem('currentUser'));
-        this.isAdmin(JSON.parse(localStorage.getItem('currentUser'))).subscribe(
-          result => {
-            localStorage.setItem('isCurentUserAdmin', JSON.stringify(result));
-          },
-          (error) => console.log(error)
-        );
+        
+        //console.log('currentUser');
+        //console.log(localStorage.getItem('currentUser'));
         localStorage.setItem('token', user.accessToken);
         localStorage.setItem(this.USER_NAME_SESSION_ATTRIBUTE_NAME, user);
 
@@ -59,6 +55,10 @@ export class AuthService {
         console.log("token:" + localStorage.getItem('token'));
         return user;
       }));
+  }
+
+  getAllUsersData(username){
+
   }
 
   getToken() {
@@ -93,9 +93,12 @@ export class AuthService {
   }
 
   isCurentUserAdmin() {
+    //console.log('isCurentUserAdmin');
+    //console.log(localStorage.getItem('isCurentUserAdmin'));
     let isAdmin = localStorage.getItem('isCurentUserAdmin');
     if (isAdmin === null) return false
-    return isAdmin
+    if (isAdmin === undefined) return false
+    return JSON.parse(isAdmin);
 
   }
   getLoggedInUserName() {
@@ -108,6 +111,12 @@ export class AuthService {
     let user = sessionStorage.getItem('currentUser')
     if (user === null) return ''
     return user
+  }
+
+  getCurrentUserId(){
+    let user = localStorage.getItem('currentUser')
+    if (user === null) return ''
+    return JSON.parse(localStorage.getItem('currentUser'))['id'];
   }
 
   signUp(username: String, password: String, name: String, email: String, role: String) {
@@ -134,23 +143,22 @@ export class AuthService {
 
   isUserBlocked(user): boolean {
     console.log("Inside isUserBlocked():::::")
-    
     let body = JSON.parse(JSON.stringify(user));
     this.http.post<any>(this.IS_USER_BLOCKED_PATH,body
       ,{ headers: { authorization: this.getToken() } })
-    .subscribe((result)=>{return result},
+      .subscribe((result)=>{this.isBlocked = result;
+      console.log(this.isBlocked);},
     (error)=>{console.log(error);return true;});
-    return true;
+    new Promise( resolve => setTimeout(resolve, 1000) )
+    return this.isBlocked;
   }
 
   blockUser(user){
     console.log("Inside BlockUser():::::")
     
     let body = JSON.parse(JSON.stringify(user));
-    this.http.post<any>(this.BLOCK_USER_PATH,body
-      ,{ headers: { authorization: this.getToken() } })
-    .subscribe((result)=>{return result},
-    (error)=>{console.log(error);return true;});
+    return this.http.post<any>(this.BLOCK_USER_PATH,body
+      ,{ headers: { authorization: this.getToken() } });
     
   }  
 
@@ -158,19 +166,20 @@ export class AuthService {
     console.log("Inside UnblockUser():::::")
     
     let body = JSON.parse(JSON.stringify(user));
-    this.http.post<any>(this.UNBLOCK_USER_PATH,body
-      ,{ headers: { authorization: this.getToken() } })
-    .subscribe((result)=>{return result},
-    (error)=>{console.log(error);return true;});
+    return this.http.post<any>(this.UNBLOCK_USER_PATH,body
+      ,{ headers: { authorization: this.getToken() } });
+    //.subscribe((result)=>{return result},
+    //(error)=>{console.log(error);return true;});
   }  
 
   getUserByName(name: String) {
     console.log("Inside getUserByName():::::")
     return this.http.post<any>(this.USERGETBYNAME_PATH, { name })
       .subscribe(result => {
-        console.log('user:');
+        //console.log('user:');
         console.log(result);
         localStorage.setItem('currentUser', JSON.stringify(result));
+        localStorage.setItem('isCurentUserAdmin', JSON.stringify(result.admin));
       }
       );
 

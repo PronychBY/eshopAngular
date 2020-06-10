@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SignInComponent } from './auth/sign-in/sign-in.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { FormsModule } from '@angular/forms';
+import { PaymentPageComponent } from './payment-page/payment-page.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { FormsModule } from '@angular/forms';
     ProductPageComponent,
     CartPageComponent,
     SignInComponent,
-    SignUpComponent
+    SignUpComponent,
+    PaymentPageComponent
   ],
   imports: [
     BrowserModule,

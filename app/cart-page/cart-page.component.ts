@@ -25,6 +25,11 @@ export class CartPageComponent implements OnInit {
       this.totalPrice += +this.order.products[i].price
     }
     this.isUserBlocked = this.authService.isUserBlocked(this.order.user);
+    console.log('sss')
+    console.log(this.isUserBlocked)
+    console.log(this.authService.isUserBlocked(this.order.user))
+    this.isUserBlocked = this.authService.isUserBlocked(this.order.user);
+    console.log(this.isUserBlocked)
   }
 
   deleteFromChart(index){

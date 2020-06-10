@@ -8,17 +8,20 @@ import { User } from '../entity/user';
   styleUrls: ['./main-layout.component.scss']
 })
 export class MainLayoutComponent implements OnInit {
-
+  isCurentUserAdmin:Boolean;
   constructor(
     public authService:AuthService
     ) { }
 
   ngOnInit(): void {
     console.log(' in main layout component ::::::::::::')
+    this.isCurentUserAdmin = this.authService.isCurentUserAdmin();
   }
 
   Logout(){
     this.authService.logout();  
   }
+
+  
 
 }

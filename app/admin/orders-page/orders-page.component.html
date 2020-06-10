@@ -9,18 +9,16 @@
                 <th>Name</th>
                 <th>Address</th>
                 <th>Phone</th>
-                <th>Sum</th>
             </tr>
         </thead>
 
         <tbody>
             <tr *ngFor="let order of orders; let idx = index">
                 <td>{{ idx + 1 }}</td>
-                <td>{{ order.user.name }}</td>
+                <td>{{ order.userDto.name }}</td>
                 <td>{{ order.name }}</td>
                 <td>{{ order.address }}</td>
                 <td>{{ order.phone }}</td>
-                <td>{{ order.sum }}</td>
             </tr>
         </tbody>
     </table>

@@ -27,7 +27,7 @@ export class OrdersPageComponent implements OnInit {
     this.productService.getOrders()
       .subscribe((data) => {
         this.orders = data;
-        //console.log(data)
+        console.log(data)
       },
         (error) => {
           console.log(error);

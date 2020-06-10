@@ -6,6 +6,9 @@
             <a [routerLink]="['/product']">Product</a>
         </li>
         <li routerLinkActive="active">
+            <a [routerLink]="['/payment']">Payment</a>
+        </li>
+        <li routerLinkActive="active">
             <a [routerLink]="['/cart']">Cart</a>
         </li>
         <li  *ngIf="!authService.isUserLoggedIn()" routerLinkActive="active">

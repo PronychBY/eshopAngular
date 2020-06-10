@@ -22,20 +22,27 @@ export class CustomersComponent implements OnInit {
     console.log("inside the service getAllUsers():::::::");
     this.authenticationService.getDepts()
       .subscribe((data) => {this.users = data;console.log(data)},
-        (error) => {
-          console.log(error);
+        (error) => {console.log(error);this.getAllUsers()
         }
       );
   }
 
   blockUser(user){
     console.log("inside blockUser():::::::");
-    this.authenticationService.blockUser(user);
+    this.authenticationService.blockUser(user)
+    .subscribe((result)=>{
+      this.getAllUsers()
+    },
+    (error)=>{console.log(error);this.getAllUsers()});
+;
+    
   }
 
   unblockUser(user){
     console.log("inside unblockUser():::::::");
-    this.authenticationService.unblockUser(user);
+    this.authenticationService.unblockUser(user)
+    .subscribe((result)=>{this.getAllUsers()},
+    (error)=>{console.log(error);});
   }
 
 }
